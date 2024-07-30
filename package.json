@@ -1,0 +1,23 @@
+{
+  "name": "datadog-debug-playbook",
+  "version": "1.0.0",
+  "description": "debug playbook to identify problematic requests with datadog",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npx tsc"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@datadog/datadog-api-client": "^1.26.0",
+    "commander": "^12.1.0",
+    "dotenv": "^16.4.5",
+    "figlet": "^1.7.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.5.4"
+  }
+}
