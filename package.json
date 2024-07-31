@@ -14,9 +14,11 @@
     "@datadog/datadog-api-client": "^1.26.0",
     "commander": "^12.1.0",
     "dotenv": "^16.4.5",
-    "figlet": "^1.7.0"
+    "figlet": "^1.7.0",
+    "ts-node": "^10.9.2"
   },
   "devDependencies": {
+    "@types/figlet": "^1.5.8",
     "@types/node": "^22.0.0",
     "typescript": "^5.5.4"
   }

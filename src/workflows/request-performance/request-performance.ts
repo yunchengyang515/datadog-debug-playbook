@@ -1,10 +1,12 @@
 import { LogsApi } from "@datadog/datadog-api-client/dist/packages/datadog-api-client-v1";
 import { getLogsApi } from "../../datadog/apis/logs";
-import { getMetricsApi } from "../../datadog/apis/metrics";
+import { getV2MetricsApi } from "../../datadog/apis/metrics";
 import { Workflow } from "../workflow";
 import { TimeFrame } from "../../types/time-frame";
 import queries from "./queries.json";
 import { MetricsApi } from "@datadog/datadog-api-client/dist/packages/datadog-api-client-v2";
+import { v2 } from "@datadog/datadog-api-client";
+import { extractHighCpuTimePointsFromSeries } from "../../datadog/metric-parser";
 
 /**
  * Workflow to debug request performance, with Datadog API
@@ -18,27 +20,45 @@ export class RequestPerformanceWorkflow extends Workflow {
   constructor({ timeFrame }: { timeFrame: TimeFrame }) {
     super();
     this.logsApi = getLogsApi();
-    this.metricsApi = getMetricsApi();
+    this.metricsApi = getV2MetricsApi();
     this.timeFrame = timeFrame;
   }
-
+  async execute() {
+    console.log("Requesting performance data...");
+    const result = await this.fetchHighCpuTimePoint();
+    console.log(result);
+  }
   /**
    * Get the time point when the CPU usage is high
    * @returns a list of time points and tags
    */
   private async fetchHighCpuTimePoint() {
-    const metricsParams = {
-      from: this.timeFrame.from,
-      to: this.timeFrame.to,
-      query: queries.cpuMetricsQuery, // Assuming the query is defined in queries.json
+    const metricsParams: v2.MetricsApiQueryTimeseriesDataRequest = {
+      body: {
+        data: {
+          attributes: {
+            from: this.timeFrame.from,
+            interval: 5000,
+            queries: [
+              {
+                dataSource: "metrics",
+                query: queries.cpuMetricsQuery,
+                name: "cpu usage",
+              },
+            ],
+            to: this.timeFrame.to,
+          },
+          type: "timeseries_request",
+        },
+      },
     };
     const response = await this.metricsApi.queryTimeseriesData(metricsParams);
-    const series = response.series;
+    return extractHighCpuTimePointsFromSeries(
+      response,
+      queries.cpuMetricsThresholdInCore,
+      queries.cpuMetricsTargetTag
+    );
   }
-
-  private async extractTimePointsFromSeries(
-    series: MetricsQueryResponse["series"]
-  ) {}
 
   /**
    * Get the requests right before the time point when CPU usage is high
@@ -74,7 +94,4 @@ export class RequestPerformanceWorkflow extends Workflow {
   }
 
   private listUniqueRequestsRelatedToHighCpu() {}
-  execute(): void {
-    console.log("Requesting performance data...");
-  }
 }
