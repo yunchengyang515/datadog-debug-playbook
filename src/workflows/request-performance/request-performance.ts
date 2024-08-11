@@ -1,12 +1,12 @@
 import { LogsApi } from "@datadog/datadog-api-client/dist/packages/datadog-api-client-v1";
 import { getLogsApi } from "../../datadog/apis/logs";
-import { getV2MetricsApi } from "../../datadog/apis/metrics";
+import { getV2MetricsApi } from "../../datadog/apis/metircs/metrics";
 import { Workflow } from "../workflow";
 import { TimeFrame } from "../../types/time-frame";
 import queries from "./queries.json";
 import { MetricsApi } from "@datadog/datadog-api-client/dist/packages/datadog-api-client-v2";
 import { v2 } from "@datadog/datadog-api-client";
-import { extractHighCpuTimePointsFromSeries } from "../../datadog/metric-parser";
+import { extractHighCpuTimePointsFromSeries } from "../../datadog/apis/metircs/metrics-parser";
 
 /**
  * Workflow to debug request performance, with Datadog API
@@ -64,7 +64,7 @@ export class RequestPerformanceWorkflow extends Workflow {
    * Get the requests right before the time point when CPU usage is high
    * @returns
    */
-  private fetchRequestsBeforeHighCpu() {
+  private fetchRequestsBeforeHighCpu(tag: string, timePoint: number) {
     return;
   }
 
