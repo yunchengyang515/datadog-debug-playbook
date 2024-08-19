@@ -1,0 +1,49 @@
+{
+  "status": "ok",
+  "res_type": "time_series",
+  "resp_version": 1,
+  "query": "cutoff_min(max:container.cpu.user{container_name:dashpivot-api, task_name:dashpivot-ecs-api-infra-au1*} by {container_id}, 800000000)",
+  "from_date": 1721737080000,
+  "to_date": 1721737200000,
+  "series": [
+    {
+      "unit": [
+        {
+          "family": "cpu",
+          "id": 121,
+          "name": "nanocore",
+          "short_name": "ncores",
+          "plural": "nanocores",
+          "scale_factor": 1e-9
+        },
+        null
+      ],
+      "query_index": 0,
+      "aggr": "max",
+      "metric": "cutoff_min(container.cpu.user,800000000.0)",
+      "tag_set": ["container_id:030308e156174239b2753407f83ebab6-3321642634"],
+      "expression": "cutoff_min(max:container.cpu.user{container_id:030308e156174239b2753407f83ebab6-3321642634,container_name:dashpivot-api,task_name:dashpivot-ecs-api-infra-au1*},800000000.0)",
+      "scope": "container_id:030308e156174239b2753407f83ebab6-3321642634,container_name:dashpivot-api,task_name:dashpivot-ecs-api-infra-au1*",
+      "interval": 1,
+      "length": 8,
+      "start": 1721737088000,
+      "end": 1721737193000,
+      "pointlist": [
+        [1721737088000.0, null],
+        [1721737103000.0, 858030085.4741503],
+        [1721737118000.0, null],
+        [1721737133000.0, 975561184.1454662],
+        [1721737148000.0, null],
+        [1721737163000.0, null],
+        [1721737178000.0, null],
+        [1721737193000.0, 930586651.6077688]
+      ],
+      "display_name": "cutoff_min(container.cpu.user,800000000.0)",
+      "attributes": {}
+    }
+  ],
+  "values": [],
+  "times": [],
+  "message": "",
+  "group_by": ["container_id"]
+}

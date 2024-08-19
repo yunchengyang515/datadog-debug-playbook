@@ -7,9 +7,11 @@ export abstract class MetricsApi {
     query: string;
     timeFrame: TimeFrame;
   }): Promise<Metrics>;
-  abstract getMetrics(params: {
+  protected abstract getMetrics(params: {
     query: string;
     timeFrame: TimeFrame;
   }): Promise<TimeseriesFormulaQueryResponse>;
-  abstract parseMetrics(response: TimeseriesFormulaQueryResponse): Metrics;
+  protected abstract parseMetrics(
+    response: TimeseriesFormulaQueryResponse
+  ): Metrics;
 }

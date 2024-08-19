@@ -16,10 +16,11 @@ export const getV2MetricsApi = () => {
   return apiInstance;
 };
 
-export class DatadogMetricsApi implements MetricsApi {
+export class DatadogMetricsApi extends MetricsApi {
   private apiInstance: v2.MetricsApi;
 
   constructor() {
+    super();
     this.apiInstance = getV2MetricsApi();
   }
 
@@ -32,7 +33,7 @@ export class DatadogMetricsApi implements MetricsApi {
     return this.parseMetrics(metricsResponse);
   }
 
-  async getMetrics(params: {
+  protected async getMetrics(params: {
     query: string;
     timeFrame: TimeFrame;
     name: string;
@@ -59,7 +60,7 @@ export class DatadogMetricsApi implements MetricsApi {
     return this.apiInstance.queryTimeseriesData(requestParams);
   }
 
-  parseMetrics(response: TimeseriesFormulaQueryResponse): Metrics {
+  protected parseMetrics(response: TimeseriesFormulaQueryResponse): Metrics {
     return parseMetricResponse(response);
   }
 }
