@@ -1,6 +1,0 @@
-{
-  "cpuMetricsQuery": "max:container.cpu.user{task_name:dashpivot-ecs-api-production-au1} by {container_id}",
-  "cpuMetricsThresholdInCore": 0.3,
-  "cpuMetricsInterval": 5000,
-  "cpuMetricsTargetTag": "container_id"
-}
