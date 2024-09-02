@@ -1,49 +1,58 @@
 {
-  "status": "ok",
-  "res_type": "time_series",
-  "resp_version": 1,
-  "query": "cutoff_min(max:container.cpu.user{container_name:dashpivot-api, task_name:dashpivot-ecs-api-infra-au1*} by {container_id}, 800000000)",
-  "from_date": 1721737080000,
-  "to_date": 1721737200000,
-  "series": [
-    {
-      "unit": [
+  "data": {
+    "attributes": {
+      "series": [
         {
-          "family": "cpu",
-          "id": 121,
-          "name": "nanocore",
-          "short_name": "ncores",
-          "plural": "nanocores",
-          "scale_factor": 1e-9
+          "groupTags": [
+            "container_id:37acd4800ca54ced8aef65e42428cdf8-3321642634"
+          ],
+          "queryIndex": 0,
+          "unit": [
+            {
+              "family": "cpu",
+              "name": "nanocore",
+              "plural": "nanocores",
+              "scaleFactor": 1e-9,
+              "shortName": "ncores",
+              "additionalProperties": {
+                "id": 121
+              }
+            },
+            null
+          ]
         },
-        null
+        {
+          "groupTags": [
+            "container_id:959809dd199e4e2c9f9b5e7dc6c1ae32-3321642634"
+          ],
+          "queryIndex": 0,
+          "unit": [
+            {
+              "family": "cpu",
+              "name": "nanocore",
+              "plural": "nanocores",
+              "scaleFactor": 1e-9,
+              "shortName": "ncores",
+              "additionalProperties": {
+                "id": 121
+              }
+            },
+            null
+          ]
+        }
       ],
-      "query_index": 0,
-      "aggr": "max",
-      "metric": "cutoff_min(container.cpu.user,800000000.0)",
-      "tag_set": ["container_id:030308e156174239b2753407f83ebab6-3321642634"],
-      "expression": "cutoff_min(max:container.cpu.user{container_id:030308e156174239b2753407f83ebab6-3321642634,container_name:dashpivot-api,task_name:dashpivot-ecs-api-infra-au1*},800000000.0)",
-      "scope": "container_id:030308e156174239b2753407f83ebab6-3321642634,container_name:dashpivot-api,task_name:dashpivot-ecs-api-infra-au1*",
-      "interval": 1,
-      "length": 8,
-      "start": 1721737088000,
-      "end": 1721737193000,
-      "pointlist": [
-        [1721737088000.0, null],
-        [1721737103000.0, 858030085.4741503],
-        [1721737118000.0, null],
-        [1721737133000.0, 975561184.1454662],
-        [1721737148000.0, null],
-        [1721737163000.0, null],
-        [1721737178000.0, null],
-        [1721737193000.0, 930586651.6077688]
+      "times": [
+        1722478263000, 1722478278000, 1722478293000, 1722478308000,
+        1722478314000
       ],
-      "display_name": "cutoff_min(container.cpu.user,800000000.0)",
-      "attributes": {}
+      "values": [
+        [15333555.118802, 0, 0, 2666725.032812, 1866702.902824],
+        [null, null, null, null, 207321223.171629]
+      ]
+    },
+    "type": "timeseries_response",
+    "additionalProperties": {
+      "id": "0"
     }
-  ],
-  "values": [],
-  "times": [],
-  "message": "",
-  "group_by": ["container_id"]
+  }
 }
