@@ -1,0 +1,58 @@
+{
+  "data": {
+    "attributes": {
+      "series": [
+        {
+          "groupTags": [
+            "container_id:37acd4800ca54ced8aef65e42428cdf8-3321642634"
+          ],
+          "queryIndex": 0,
+          "unit": [
+            {
+              "family": "cpu",
+              "name": "nanocore",
+              "plural": "nanocores",
+              "scaleFactor": 1e-9,
+              "shortName": "ncores",
+              "additionalProperties": {
+                "id": 121
+              }
+            },
+            null
+          ]
+        },
+        {
+          "groupTags": [
+            "container_id:959809dd199e4e2c9f9b5e7dc6c1ae32-3321642634"
+          ],
+          "queryIndex": 0,
+          "unit": [
+            {
+              "family": "cpu",
+              "name": "nanocore",
+              "plural": "nanocores",
+              "scaleFactor": 1e-9,
+              "shortName": "ncores",
+              "additionalProperties": {
+                "id": 121
+              }
+            },
+            null
+          ]
+        }
+      ],
+      "times": [
+        1722478263000, 1722478278000, 1722478293000, 1722478308000,
+        1722478314000
+      ],
+      "values": [
+        [15333555.118802, 0, 0, 2666725.032812, 1866702.902824],
+        [null, null, null, null, 207321223.171629]
+      ]
+    },
+    "type": "timeseries_response",
+    "additionalProperties": {
+      "id": "0"
+    }
+  }
+}
