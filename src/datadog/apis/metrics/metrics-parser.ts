@@ -1,48 +1,95 @@
 import { v2 } from "@datadog/datadog-api-client";
-import { Metrics } from "../../../types/metrics";
+import { Metrics, MetricsPoint } from "../../../types/metrics";
 
+// Main function to parse the Datadog metrics response
 export const parseMetricResponse = (
   queryResponse: v2.TimeseriesFormulaQueryResponse
 ): Metrics => {
-  if (!queryResponse.data?.attributes) {
-    console.warn("Missing data or attributes in queryResponse.");
+  const attributes = getValidAttributes(queryResponse);
+  if (!attributes) {
     return [];
   }
 
-  const { series, times, values } = queryResponse.data.attributes;
+  const { series, times, values } = attributes;
 
   if (!series || !times || !values) {
-    console.warn("Missing series, times, or values in attributes.");
     return [];
   }
 
-  const metrics: Metrics = [];
+  return series.reduce<Metrics>((acc, seriesItem, index) => {
+    const metricsPoints = extractMetricsPoints(
+      seriesItem,
+      times,
+      values[index] || []
+    );
+    return [...acc, ...metricsPoints];
+  }, []);
+};
 
-  series.forEach((seriesItem, i) => {
-    if (!seriesItem.groupTags || !seriesItem.unit) {
-      console.warn(`Skipping series ${i} due to missing groupTags or unit.`);
-      return;
-    }
+// Safely get valid attributes from the query response
+const getValidAttributes = (
+  queryResponse: v2.TimeseriesFormulaQueryResponse
+): v2.TimeseriesResponseAttributes | undefined => {
+  const attributes = queryResponse.data?.attributes;
+  if (
+    attributes &&
+    attributes.series &&
+    attributes.times &&
+    attributes.values
+  ) {
+    return attributes;
+  }
+  console.warn("Missing series, times, or values in attributes.");
+  return undefined;
+};
 
-    const groupTags = seriesItem.groupTags;
-    const unit = seriesItem.unit[0];
-    const scaleFactor = unit?.scaleFactor ?? 1;
+// Extract metrics points from a series item, times, and values
+const extractMetricsPoints = (
+  seriesItem: v2.TimeseriesResponseSeries,
+  times: number[],
+  values: (number | null)[]
+): Metrics => {
+  if (!isValidSeries(seriesItem)) {
+    return [];
+  }
 
-    values[i]?.forEach((value, index) => {
-      if (value !== null) {
-        // Multiply by scaleFactor and round to 5 decimal places
-        const roundedValue = parseFloat(
-          ((value as number) * scaleFactor).toFixed(5)
-        );
+  const scaleFactor = getScaleFactor(seriesItem);
+  return values
+    .map((value, index) =>
+      value !== null
+        ? createMetricsPoint(
+            value,
+            times[index],
+            scaleFactor,
+            seriesItem.groupTags || []
+          )
+        : null
+    )
+    .filter((point): point is MetricsPoint => point !== null);
+};
 
-        metrics.push({
-          timestamp: times[index],
-          attributes: groupTags,
-          value: roundedValue,
-        });
-      }
-    });
-  });
+// Check if a series item has required properties
+const isValidSeries = (seriesItem: v2.TimeseriesResponseSeries): boolean => {
+  return !!seriesItem.groupTags && !!seriesItem.unit;
+};
 
-  return metrics;
+// Get the scale factor from the unit, defaulting to 1 if undefined
+const getScaleFactor = (seriesItem: v2.TimeseriesResponseSeries): number => {
+  const unit = seriesItem.unit?.[0];
+  return unit?.scaleFactor ?? 1;
+};
+
+// Create a metrics point with scaled value and rounded to 5 decimal places
+const createMetricsPoint = (
+  value: number,
+  timestamp: number,
+  scaleFactor: number,
+  groupTags: string[]
+): MetricsPoint => {
+  const scaledValue = parseFloat((value * scaleFactor).toFixed(5));
+  return {
+    timestamp,
+    attributes: groupTags,
+    value: scaledValue,
+  };
 };
