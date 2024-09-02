@@ -30,6 +30,7 @@ export class DatadogMetricsApi extends MetricsApi {
     name: string;
   }): Promise<Metrics> {
     const metricsResponse = await this.getMetrics(params);
+    console.log(JSON.stringify(metricsResponse));
     return this.parseMetrics(metricsResponse);
   }
 

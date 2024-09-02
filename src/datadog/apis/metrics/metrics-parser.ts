@@ -4,32 +4,45 @@ import { Metrics } from "../../../types/metrics";
 export const parseMetricResponse = (
   queryResponse: v2.TimeseriesFormulaQueryResponse
 ): Metrics => {
-  if (!queryResponse.data || !queryResponse.data.attributes) {
+  if (!queryResponse.data?.attributes) {
+    console.warn("Missing data or attributes in queryResponse.");
     return [];
   }
-  const { series, times, values } = queryResponse.data?.attributes;
+
+  const { series, times, values } = queryResponse.data.attributes;
 
   if (!series || !times || !values) {
+    console.warn("Missing series, times, or values in attributes.");
     return [];
   }
+
   const metrics: Metrics = [];
-  for (let i = 0; i < series.length; i++) {
-    if (!series[i].groupTags || !series[i].unit) {
-      continue;
+
+  series.forEach((seriesItem, i) => {
+    if (!seriesItem.groupTags || !seriesItem.unit) {
+      console.warn(`Skipping series ${i} due to missing groupTags or unit.`);
+      return;
     }
-    const groupTags = series[i].groupTags;
-    const unit = series[i].unit?.[0] ?? undefined;
+
+    const groupTags = seriesItem.groupTags;
+    const unit = seriesItem.unit[0];
     const scaleFactor = unit?.scaleFactor ?? 1;
 
-    const seriesValues =
-      values[i]?.map((value) => (value as number) * scaleFactor) ?? [];
-    const queryResultSeries: Metrics = seriesValues.map((value, index) => ({
-      timestamp: times[index],
-      attributes: groupTags,
-      value,
-    }));
-    metrics.push(...queryResultSeries);
-  }
+    values[i]?.forEach((value, index) => {
+      if (value !== null) {
+        // Multiply by scaleFactor and round to 5 decimal places
+        const roundedValue = parseFloat(
+          ((value as number) * scaleFactor).toFixed(5)
+        );
+
+        metrics.push({
+          timestamp: times[index],
+          attributes: groupTags,
+          value: roundedValue,
+        });
+      }
+    });
+  });
 
   return metrics;
 };
