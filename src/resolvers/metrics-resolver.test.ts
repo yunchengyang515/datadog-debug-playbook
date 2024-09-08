@@ -26,6 +26,8 @@ describe("MetricsResolver", () => {
       name: "Test Stage",
       query: "avg:system.cpu.user{*}",
       params: { timeFrame: "last_24h" },
+      type: "Metrics",
+      target: "metrics",
     };
 
     const expectedTimeFrame = { from: 1620000000, to: 1620003600 };
@@ -50,10 +52,12 @@ describe("MetricsResolver", () => {
       name: "Invalid Stage",
       query: "",
       params: { timeFrame: "" },
+      type: "Metrics",
+      target: "metrics",
     };
 
     await expect(resolver.resolve(invalidStage)).rejects.toThrow(
-      "Invalid stage configuration"
+      "Missing required fields: query, params.timeFrame"
     );
   });
 });
