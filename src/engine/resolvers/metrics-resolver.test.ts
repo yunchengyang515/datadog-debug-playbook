@@ -23,6 +23,7 @@ describe("MetricsResolver", () => {
 
   it("should correctly parse the stage and call the metrics API", async () => {
     const stage = {
+      id: "test_stage",
       name: "Test Stage",
       query: "avg:system.cpu.user{*}",
       params: { timeFrame: "last_24h" },
@@ -49,6 +50,7 @@ describe("MetricsResolver", () => {
 
   it("should throw an error if the stage is invalid", async () => {
     const invalidStage = {
+      id: "invalid_stage",
       name: "Invalid Stage",
       query: "",
       params: { timeFrame: "" },

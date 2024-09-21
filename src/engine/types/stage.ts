@@ -1,4 +1,5 @@
 export interface Stage {
+  id: string;
   name: string;
   type: string;
   target: string;
