@@ -11,6 +11,7 @@ describe("StageValidator", () => {
 
   it("should pass validation for a valid metrics stage", () => {
     const validStage = {
+      id: "test_stage",
       name: "Identify CPU Spike",
       type: "QueryTarget",
       target: "metrics",
@@ -25,6 +26,7 @@ describe("StageValidator", () => {
 
   it("should throw an error when a required field is missing", () => {
     const missingNameStage = {
+      id: "test_stage",
       type: "QueryTarget",
       target: "metrics",
       query: "avg:system.cpu.user{*} by {host}",
@@ -38,6 +40,7 @@ describe("StageValidator", () => {
 
   it("should throw an error when params.timeFrame is missing", () => {
     const missingTimeFrameStage = {
+      id: "invalid_stage",
       name: "Identify CPU Spike",
       type: "QueryTarget",
       target: "metrics",

@@ -1,6 +1,6 @@
 import { v1, v2 } from "@datadog/datadog-api-client";
 import { getDatadogClientConfiguration } from "../../clients";
-import { MetricsApi } from "../../../apis/metrics";
+import { MetricsApi } from "../../../integration-apis/metrics";
 import { Metrics } from "../../../types/metrics";
 import {
   MetricsApiQueryTimeseriesDataRequest,
