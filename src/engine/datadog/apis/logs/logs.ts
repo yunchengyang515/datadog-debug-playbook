@@ -35,7 +35,6 @@ export class DatadogLogsApi extends LogsApi {
       },
     };
 
-    // Making the API call with the constructed request params
     return this.apiInstance.listLogs(requestParams);
   }
 }
