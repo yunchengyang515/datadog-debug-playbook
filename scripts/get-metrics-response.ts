@@ -28,8 +28,7 @@ const getV2MetricsApi = () => {
             queries: [
               {
                 dataSource: "metrics",
-                query:
-                  "cutoff_min(max:container.cpu.user{container_name:dashpivot-api, task_name:dashpivot-ecs-api-production-au1*} by {container_id}, 30000000)", // Replace with the desired query
+                query: "your query", // Replace with the desired query
                 name: "cpu_usage",
               },
             ],

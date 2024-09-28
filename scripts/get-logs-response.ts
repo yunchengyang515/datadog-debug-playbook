@@ -10,7 +10,7 @@ import { DatadogLogsApi } from "../src/engine/datadog/apis/logs/logs";
 
     // Define parameters for the logs query
     const params = {
-      query: "service:dashpivot-api AND env:production", // Replace with your desired query
+      query: "your query",
       timeFrame: {
         from: new Date(Date.now() - 60 * 1000).getTime(), // 24 hours ago
         to: Date.now(),
