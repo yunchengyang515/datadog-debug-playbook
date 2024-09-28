@@ -1,0 +1,88 @@
+{
+  "data": [
+    {
+      "attributes": {
+        "attributes": {
+          "dd": {
+            "service": "leashio-api",
+            "version": "24.4.0"
+          },
+          "level": "http",
+          "service": "leashio-api",
+          "meta": {
+            "formId": "REDACTED_FORM_ID",
+            "res": {
+              "statusCode": 200
+            },
+            "responseTime": 81,
+            "teamId": "REDACTED_TEAM_ID",
+            "templateId": "REDACTED_TEMPLATE_ID",
+            "userId": "REDACTED_USER_ID",
+            "req": {
+              "headers": {
+                "referer": "https://example.com/",
+                "host": "api.example.com",
+                "user-agent": "Mozilla/5.0"
+              },
+              "httpVersion": "1.1",
+              "method": "GET",
+              "originalUrl": "/forms/REDACTED_FORM_ID",
+              "url": "/forms/REDACTED_FORM_ID"
+            }
+          },
+          "source": "stdout",
+          "timestamp": "2024-09-28T14:04:13.453Z"
+        },
+        "message": "HTTP RES GET 81ms /forms/REDACTED_FORM_ID",
+        "service": "leashio-api",
+        "status": "info",
+        "tags": ["container_name:leashio-api", "env:production"],
+        "timestamp": "2024-09-28T14:04:13.453Z"
+      },
+      "id": "LOG_ID_1",
+      "type": "log"
+    },
+    {
+      "attributes": {
+        "attributes": {
+          "dd": {
+            "service": "leashio-api",
+            "version": "24.4.0"
+          },
+          "level": "http",
+          "service": "leashio-api",
+          "meta": {
+            "req": {
+              "headers": {
+                "referer": "https://example.com/",
+                "host": "api.example.com",
+                "user-agent": "Mozilla/5.0"
+              },
+              "httpVersion": "1.1",
+              "method": "GET",
+              "originalUrl": "/exports/REDACTED_EXPORT_ID",
+              "url": "/exports/REDACTED_EXPORT_ID"
+            }
+          },
+          "source": "stdout",
+          "timestamp": "2024-09-28T14:04:13.064Z"
+        },
+        "message": "HTTP REQ GET /exports/REDACTED_EXPORT_ID",
+        "service": "leashio-api",
+        "status": "info",
+        "tags": [
+          "container_name:leashio-api",
+          "env:production",
+          "region:ap-southeast-2",
+          "version:24.4.0"
+        ],
+        "timestamp": "2024-09-28T14:04:13.064Z"
+      },
+      "id": "LOG_ID_2",
+      "type": "log"
+    }
+  ],
+  "meta": {
+    "status": "done"
+  }
+}
