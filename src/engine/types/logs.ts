@@ -1,6 +1,6 @@
 export type Log = {
   message: string;
-  timestamp: number;
+  timestamp: number | Date;
   attributes?: string[];
 };
 

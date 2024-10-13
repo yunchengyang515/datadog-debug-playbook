@@ -3,6 +3,8 @@ import { v2 } from "@datadog/datadog-api-client";
 import { getDatadogClientConfiguration } from "../../clients"; // Configuration helper
 import { TimeFrame } from "../../../types/time-frame"; // Assuming this type exists
 import { LogsApi } from "../../../integration-apis/logs";
+import { parseLogsResponse } from "./logs-parser";
+import { Logs } from "../../../types/logs";
 
 export class DatadogLogsApi extends LogsApi {
   private apiInstance: v2.LogsApi;
@@ -18,10 +20,9 @@ export class DatadogLogsApi extends LogsApi {
     timeFrame: TimeFrame;
     name: string;
     indexes?: string[]; // Optional field for indexes
-  }): Promise<v2.LogsListResponse> {
+  }): Promise<Logs> {
     const { query, timeFrame, indexes } = params;
 
-    // Constructing the LogsQueryFilter for the request
     const filter: v2.LogsQueryFilter = {
       from: new Date(timeFrame.from).toISOString(),
       to: new Date(timeFrame.to).toISOString(),
@@ -35,6 +36,7 @@ export class DatadogLogsApi extends LogsApi {
       },
     };
 
-    return this.apiInstance.listLogs(requestParams);
+    const response = await this.apiInstance.listLogs(requestParams);
+    return parseLogsResponse(response);
   }
 }

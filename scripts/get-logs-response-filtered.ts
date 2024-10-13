@@ -20,7 +20,7 @@ import { DatadogLogsApi } from "../src/engine/datadog/apis/logs/logs";
     };
 
     // Fetch the logs data using the query method
-    const response: v2.LogsListResponse = await logsApi.query(params);
+    const response = await logsApi.query(params);
 
     // Log the response as a JavaScript variable
     console.log(
