@@ -1,7 +1,7 @@
 import { DatadogMetricsApi } from "./metrics";
 import { TimeFrame } from "../../../types/time-frame";
 import { Metrics } from "../../../types/metrics";
-import mockResponse from "./datadog-query-timeseries-metrics-response-dashpivot-infra.json"; // Adjust the path to your mock response file
+import mockResponse from "./datadog-query-timeseries-metrics-response.json"; // Adjust the path to your mock response file
 
 describe("DatadogMetricsApi - query method", () => {
   let datadogMetricsApi: DatadogMetricsApi;

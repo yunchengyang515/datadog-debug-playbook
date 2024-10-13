@@ -20,7 +20,6 @@ export class EngineService {
       // Optional: Return or handle results
       return this.results;
     } catch (error) {
-      console.error("Failed to run the engine:", error);
       throw error;
     }
   }
