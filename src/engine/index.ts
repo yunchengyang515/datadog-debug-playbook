@@ -1,40 +1,23 @@
-import { MetricsResolver } from "./resolvers/metrics-resolver";
-import { Playbook } from "./types/playbook";
-import { Stage } from "./types/stage";
+import express, { Request, Response } from "express";
+import { LogToCpuMapController } from "./controllers/map-logs-to-cpu-spike.controller";
 
-export class EngineService {
-  private resolvers: Record<string, any> = {
-    metrics: new MetricsResolver(), // Add other resolvers as needed
-  };
+const app = express();
+const port = process.env.PORT || 3000;
 
-  private results: Map<string, any> = new Map();
+const logToCpuMapController = new LogToCpuMapController();
 
-  // Accept the playbook directly as a JSON object from the request
-  async run(playbook: Playbook) {
-    try {
-      // Step 1: Process each stage
-      for (const stage of playbook) {
-        await this.processStage(stage);
-      }
+app.use(express.json());
 
-      // Optional: Return or handle results
-      return this.results;
-    } catch (error) {
-      throw error;
-    }
-  }
+// Define the route for your workflow
+app.post("/log-to-cpu-map", (req: Request, res: Response) => {
+  logToCpuMapController.handleLogToCpuMap(req, res);
+});
 
-  private async processStage(stage: Stage) {
-    const { id, target } = stage;
+// Catch all route for undefined routes
+app.use((req: Request, res: Response) => {
+  res.status(404).send({ message: "Route not found." });
+});
 
-    // Step 2: Select the appropriate resolver based on the stage target
-    const resolver = this.resolvers[target];
-    if (!resolver) {
-      throw new Error(`No resolver found for target: ${target}`);
-    }
-
-    // Step 3: Resolve the stage and store the result
-    const result = await resolver.resolve(stage);
-    this.results.set(id, result);
-  }
-}
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
